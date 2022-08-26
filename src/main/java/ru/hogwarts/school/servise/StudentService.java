@@ -1,52 +1,42 @@
-package ru.hogwarts.school.service;
+package ru.hogwarts.school.servise;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
-    private final HashMap<Long, Student> students = new HashMap<>(); // журнал студентов
-    private Long lastId = 0L;                         // идентификационный номер студента
 
-    public Student addStudent(Student student) {     //метод добавления студента в журнал                              C
-        student.setId(++lastId);                     //присвоение поступившему студенту ид.номера
-        students.put(lastId, student);               //зачисление студента, постановка на довольствие.
-        return student;                              //студент, будь готов к учебе и хоз работам.
+private  final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository=studentRepository;
     }
 
-    public Student findStudent(Long id) {             // По ид.номеру можем найти студента                              R
-        return students.get(id);
+
+    public Student addStudent(Student student) {   //Метод добавления студента
+        return studentRepository.save(student);
+    }
+
+    public Student getStudentId(Long id) {
+        return studentRepository.findById(id).get();   // По ид.номеру можем найти студента
     }
 
     public Student editStudent(Student student) {
-        if (students.containsKey(student.getId())) {//Если найден студент по ключу, то редактируем студенту чего нибудь)))                            U
-            students.put(student.getId(), student);
-            return student;
-        }
-        return null;
+        return studentRepository.save(student);        // Редактируем и сохраняем
     }
 
-    public Student deleteStudent(Long id) {           // Отчисляем студента без объявления причин, удаляем из журнала.  D
-        return students.remove(id);
+    public void deleteById(Long id) {
+        studentRepository.deleteById(id);              // Удаляем студента
+    }
+
+    public Collection<Student> getAllStudents() {      //  Получаем всех студентов
+        return studentRepository.findAll();
     }
 
 
-
-    public Collection<Student> findAge(int age) {
-        return students.values().stream().filter(student -> student.getAge() == age).collect(Collectors.toList());
-    }
-
-    public int getSize() {
-        return students.size();
-    }
-
-    public Collection<Student> getAllStudents() {
-        return students.values();
-    }
 }
 
 

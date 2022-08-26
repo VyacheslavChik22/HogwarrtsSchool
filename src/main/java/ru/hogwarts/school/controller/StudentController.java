@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.service.StudentService;
+import ru.hogwarts.school.servise.StudentService;
 
 import java.util.Collection;
 
@@ -18,20 +18,20 @@ public class StudentController {
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
+    @PostMapping                                               //http:/localhost:8080/student
+    public Student addStudent(@RequestBody Student student) {
+        return studentService.addStudent(student);
+    }
+
 
     @GetMapping("{id}")                                        //http:/localhost:8080/student/1...  выводим студента
-    public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
+    public ResponseEntity<Student> getStudentId(@PathVariable Long id) {
 
-        Student student = studentService.findStudent(id);
+        Student student = studentService.getStudentId(id);
         if (student == null) {                                     // Если студент не найден:
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(student);
-    }
-
-    @PostMapping                                               //http:/localhost:8080/student
-    public Student addStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
     }
 
 
@@ -50,14 +50,11 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public Student deleteStudent(@PathVariable Long id) {
-        return studentService.deleteStudent(id);
+    public ResponseEntity deleteStudent(@PathVariable Long id) {
+        studentService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping ("findAge")
-    public Collection<Student> findAge (@RequestParam(required = false) int age){
-        return studentService.findAge(age);
-    }
 
 }
 
