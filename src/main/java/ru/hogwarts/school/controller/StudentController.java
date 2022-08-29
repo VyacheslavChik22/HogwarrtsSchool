@@ -35,8 +35,28 @@ public class StudentController {
     }
 
 
-    @GetMapping
-    public ResponseEntity<Collection<Student>> allStudents() {
+    @GetMapping                       // фильтр студентов
+    public ResponseEntity findStudents(@RequestParam(required = false) String name,
+                                       @RequestParam(required = false) Long id,
+                                       @RequestParam(required = false) int age,int age2,
+                                       @RequestParam(required = false) String namePart
+                                      )
+    {
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(studentService.findStudentByName(name));
+        }
+
+        if (namePart != null && !namePart.isBlank()) {
+            return ResponseEntity.ok(studentService.findAllByNamePart(namePart));
+        }
+
+        if (age >= 10 && age <= 20 ) {  //Студенты зачисляются с 11 лет, учатся 7 лет и не могут быть старше 20ти лет.
+            return ResponseEntity.ok(studentService.findStudentsByAge(age, age2));
+        }
+        if (id > 0 ) {
+            return ResponseEntity.ok(studentService.getStudentId(id));
+        }
+
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
@@ -54,7 +74,6 @@ public class StudentController {
         studentService.deleteById(id);
         return ResponseEntity.ok().build();
     }
-
 
 }
 

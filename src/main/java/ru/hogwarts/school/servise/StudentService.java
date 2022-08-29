@@ -9,10 +9,10 @@ import java.util.Collection;
 @Service
 public class StudentService {
 
-private  final StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
-        this.studentRepository=studentRepository;
+        this.studentRepository = studentRepository;
     }
 
 
@@ -23,6 +23,7 @@ private  final StudentRepository studentRepository;
     public Student getStudentId(Long id) {
         return studentRepository.findById(id).get();   // По ид.номеру можем найти студента
     }
+
 
     public Student editStudent(Student student) {
         return studentRepository.save(student);        // Редактируем и сохраняем
@@ -36,6 +37,17 @@ private  final StudentRepository studentRepository;
         return studentRepository.findAll();
     }
 
+    public Student findStudentByName(String name) {        //используем метод поиска студента по id
+        return studentRepository.findStudentByNameContainingIgnoreCase(name);
+    }
+
+    public Collection<Student> findStudentsByAge(int age, int ag2) {
+        return studentRepository.findAllStudentsByAgeBetween(age,ag2);    //используем метод поиска студентов по возрасту
+    }
+
+    public Collection<Student> findAllByNamePart(String part){
+        return studentRepository.findAllByNameContains(part);
+    }
 
 }
 

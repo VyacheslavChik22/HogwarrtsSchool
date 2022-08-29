@@ -1,4 +1,5 @@
-/*package ru.hogwarts.school.service;
+/*
+package ru.hogwarts.school.service;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,4 +73,5 @@ class StudentServiceTest {
    }
 
 }
-        */
+
+*/

@@ -5,11 +5,11 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
     private final FacultyRepository facultyRepository;
+
 
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
@@ -17,10 +17,10 @@ public class FacultyService {
 
 
     public Faculty addFaculty(Faculty faculty) {     //метод добавления факультета               C
-       return facultyRepository.save(faculty);                    //ид.номера для факультетов
+        return facultyRepository.save(faculty);                    //ид.номера для факультетов
     }
 
-    public Faculty findFaculty(Long id){             // По ид.номеру можем найти факультет       R
+    public Faculty findFaculty(Long id) {             // По ид.номеру можем найти факультет       R
         return facultyRepository.findById(id).get();
     }
 
@@ -28,10 +28,23 @@ public class FacultyService {
         return facultyRepository.save(faculty);
     }
 
-    public void deleteFaculty(Long id){           // Удаляем факультет.                       D
+    public void deleteFaculty(Long id) {           // Удаляем факультет.                       D
         facultyRepository.deleteById(id);
     }
 
+    public Faculty findFacultyByName(String name) {     // используем метод из репозитория для поиска факультета по названию
+        return facultyRepository.findFacultyByNameContainingIgnoreCase(name);
+    }
 
+    public Collection<Faculty> findFacultyById(Long id) {  // используем метод из репозитория для поиска факультета по id
+        return facultyRepository.findFacultyById(id);
+    }
 
+    public Collection<Faculty> findFacultiesByColor(String color) { // используем метод из репозитория для поиска факультетов по цвету
+        return facultyRepository.findFacultiesByColor(color);
+    }
+
+    public Collection<Faculty> getAllFaculties(){
+        return facultyRepository.findAll();
+    }
 }
