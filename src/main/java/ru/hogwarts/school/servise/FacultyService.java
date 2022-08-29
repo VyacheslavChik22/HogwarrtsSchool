@@ -32,7 +32,7 @@ public class FacultyService {
         facultyRepository.deleteById(id);
     }
 
-    public Faculty findFacultyByName(String name) {     // используем метод из репозитория для поиска факультета по названию
+    public Collection<Faculty> findFacultyByName(String name) {     // используем метод из репозитория для поиска факультета по названию
         return facultyRepository.findFacultyByNameContainingIgnoreCase(name);
     }
 

@@ -18,6 +18,7 @@ public class StudentController {
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
+
     @PostMapping                                               //http:/localhost:8080/student
     public Student addStudent(@RequestBody Student student) {
         return studentService.addStudent(student);
@@ -25,9 +26,9 @@ public class StudentController {
 
 
     @GetMapping("{id}")                                        //http:/localhost:8080/student/1...  выводим студента
-    public ResponseEntity<Student> getStudentId(@PathVariable Long id) {
+    public ResponseEntity<Collection<Student>> getStudentId(@PathVariable Long id) {
 
-        Student student = studentService.getStudentId(id);
+        Collection<Student> student = studentService.getStudentId(id);
         if (student == null) {                                     // Если студент не найден:
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -36,12 +37,11 @@ public class StudentController {
 
 
     @GetMapping                       // фильтр студентов
-    public ResponseEntity findStudents(@RequestParam(required = false) String name,
-                                       @RequestParam(required = false) Long id,
-                                       @RequestParam(required = false) int age,int age2,
-                                       @RequestParam(required = false) String namePart
-                                      )
-    {
+    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) String name,
+                                                            @RequestParam(required = false) Long id,
+                                                            @RequestParam(required = false) int age, int age2,
+                                                            @RequestParam(required = false) String namePart
+    ) {
         if (name != null && !name.isBlank()) {
             return ResponseEntity.ok(studentService.findStudentByName(name));
         }
@@ -50,10 +50,10 @@ public class StudentController {
             return ResponseEntity.ok(studentService.findAllByNamePart(namePart));
         }
 
-        if (age >= 10 && age <= 20 ) {  //Студенты зачисляются с 11 лет, учатся 7 лет и не могут быть старше 20ти лет.
+        if (age >= 10 && age <= 20) {  //Студенты зачисляются с 11 лет, учатся 7 лет и не могут быть старше 20ти лет.
             return ResponseEntity.ok(studentService.findStudentsByAge(age, age2));
         }
-        if (id > 0 ) {
+        if (id > 0) {
             return ResponseEntity.ok(studentService.getStudentId(id));
         }
 
@@ -70,7 +70,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
         studentService.deleteById(id);
         return ResponseEntity.ok().build();
     }

@@ -28,14 +28,14 @@ public class FacultyController {
     }
 
     @GetMapping                       // Фильтры факультетов по названию, по цвету и id
-    public ResponseEntity findFaculties(@RequestParam(required = false) String name,
+    public ResponseEntity <Collection <Faculty>> findFaculties(@RequestParam(required = false) String name,
                                         @RequestParam(required = false) Long id,
                                         @RequestParam(required = false) String color) {
         if (name != null && !name.isBlank()) {
             return ResponseEntity.ok(facultyService.findFacultyByName(name));
         }
         if (color != null && !color.isBlank()) {
-            return ResponseEntity.ok(facultyService.findFacultyByName(color));
+            return ResponseEntity.ok(facultyService.findFacultiesByColor(color));
         }
         if (id > 0 ) {
             return ResponseEntity.ok(facultyService.findFacultyByName(String.valueOf(id)));
@@ -60,7 +60,7 @@ public class FacultyController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity removeFaculty(@PathVariable Long id) {
+    public ResponseEntity <Collection <Faculty>> removeFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
 

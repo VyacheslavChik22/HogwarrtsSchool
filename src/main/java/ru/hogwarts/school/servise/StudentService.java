@@ -1,5 +1,4 @@
 package ru.hogwarts.school.servise;
-
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
@@ -20,8 +19,8 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student getStudentId(Long id) {
-        return studentRepository.findById(id).get();   // По ид.номеру можем найти студента
+    public Collection<Student> getStudentId(Long id) {
+        return studentRepository.findStudentsById(id);   // По ид.номеру можем найти студента
     }
 
 
@@ -37,7 +36,7 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student findStudentByName(String name) {        //используем метод поиска студента по id
+    public Collection<Student> findStudentByName(String name) {        //используем метод поиска студента по имени без учета регистра
         return studentRepository.findStudentByNameContainingIgnoreCase(name);
     }
 

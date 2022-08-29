@@ -11,7 +11,7 @@ public class Student {
     private Long id;
     private String name;
     private int age;
-
+    //********************************************
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
@@ -19,6 +19,7 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private Set<Faculty> faculties;
 
+    //*********************************************
     public Student(Long id, String name, int age) {
         this.id = id;
         this.name = name;

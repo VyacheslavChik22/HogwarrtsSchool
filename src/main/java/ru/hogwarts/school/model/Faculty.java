@@ -12,14 +12,14 @@ public class Faculty {
     private Long id;
     private String name;
     private String color;
-
+    //
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
 
     @OneToMany(mappedBy = "faculty")
     private Set<Student> students;
-
+//
 
     public Faculty(Long id, String name, String color) {
         this.id = id;
