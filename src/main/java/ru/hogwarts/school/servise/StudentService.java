@@ -1,4 +1,5 @@
 package ru.hogwarts.school.servise;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
@@ -47,6 +48,7 @@ public class StudentService {
     public Collection<Student> findAllByNamePart(String part){
         return studentRepository.findAllByNameContains(part);
     }
+
 
 }
 
