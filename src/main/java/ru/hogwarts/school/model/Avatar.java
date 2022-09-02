@@ -31,6 +31,10 @@ public class Avatar {
         return preview;
     }
 
+    public void setPreview(byte[] preview) {
+        this.preview = preview;
+    }
+
     public Avatar() {
 
     }
