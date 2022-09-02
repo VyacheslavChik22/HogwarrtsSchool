@@ -29,8 +29,8 @@ public class FacultyController {
 
     @GetMapping                       // Фильтры факультетов по названию, по цвету и id
     public ResponseEntity <Collection <Faculty>> findFaculties(@RequestParam(required = false) String name,
-                                        @RequestParam(required = false) Long id,
-                                        @RequestParam(required = false) String color) {
+                                                               @RequestParam(required = false) Long id,
+                                                               @RequestParam(required = false) String color) {
         if (name != null && !name.isBlank()) {
             return ResponseEntity.ok(facultyService.findFacultyByName(name));
         }

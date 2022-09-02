@@ -16,8 +16,13 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @OneToMany(mappedBy = "student")
-    private Set<Faculty> faculties;
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
 
     //*********************************************
     public Student(Long id, String name, int age) {

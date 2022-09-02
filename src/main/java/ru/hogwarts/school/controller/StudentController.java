@@ -53,7 +53,8 @@ public class StudentController {
     @GetMapping                       // фильтр студентов
     public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) String name,
                                                             @RequestParam(required = false) Long id,
-                                                            @RequestParam(required = false) int age, int age2,
+                                                            @RequestParam(required = false) int age,
+                                                            @RequestParam(required = false)int age2,
                                                             @RequestParam(required = false) String namePart
     ) {
         if (name != null && !name.isBlank()) {

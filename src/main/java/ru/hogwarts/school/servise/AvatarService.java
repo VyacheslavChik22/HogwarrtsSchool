@@ -35,7 +35,7 @@ public class AvatarService {
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
-        Collection<Student> student = studentRepository.findStudentsById(studentId);
+        Student student = studentRepository.findById(studentId).orElse(null);
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(Objects.requireNonNull(avatarFile.getOriginalFilename())));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
@@ -56,7 +56,7 @@ public class AvatarService {
         avatarRepository.save(avatar);
     }
     public Avatar findAvatar(Long id){
-        return avatarRepository.findByStudentId(id).orElseThrow();
+        return avatarRepository.findByStudentId(id).orElse(new Avatar());
     }
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);

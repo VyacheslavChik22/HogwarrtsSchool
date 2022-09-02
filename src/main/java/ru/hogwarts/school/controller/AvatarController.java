@@ -13,7 +13,11 @@ import java.io.IOException;
 @RestController
 @RequestMapping
 public class AvatarController {
-    AvatarService avatarService;
+  private final   AvatarService avatarService;
+
+    public AvatarController(AvatarService avatarService) {
+        this.avatarService = avatarService;
+    }
 
 
     @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -34,3 +38,4 @@ public class AvatarController {
 
 
 }
+
