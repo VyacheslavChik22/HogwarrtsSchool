@@ -2,7 +2,6 @@ package ru.hogwarts.school.model;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Student {

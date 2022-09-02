@@ -10,15 +10,15 @@ import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.servise.AvatarService;
 
 import java.io.IOException;
+
 @RestController
 @RequestMapping
 public class AvatarController {
-  private final   AvatarService avatarService;
+    private final AvatarService avatarService;
 
     public AvatarController(AvatarService avatarService) {
         this.avatarService = avatarService;
     }
-
 
     @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar) throws IOException {
@@ -34,8 +34,5 @@ public class AvatarController {
         headers.setContentLength(avatar.getData().length);
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
     }
-
-
-
 }
 
